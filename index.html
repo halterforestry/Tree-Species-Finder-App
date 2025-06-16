@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tree Species Library Finder</title>
+    <title>Tree Species Finder / El Buscador de Arboles</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -21,33 +21,25 @@
         .address-link:hover {
             color: #1d4ed8; /* Darker blue on hover */
         }
+        /* Style for dropdown options to allow specific sizing */
+        .species-option .latin {
+            font-style: italic;
+        }
     </style>
 </head>
 <body class="p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-screen">
     <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-lg">
-        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Find Tree Species by Location</h1>
-
-        <div class="mb-6">
-            <label for="species-search" class="block text-gray-700 text-sm font-medium mb-2">
-                Search tree species:
-            </label>
-            <input
-                type="text"
-                id="species-search"
-                placeholder="e.g., Live Oak"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800 transition duration-200"
-            >
-        </div>
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Tree Species Finder / El Buscador de Arboles</h1>
 
         <div class="mb-6">
             <label for="species-select" class="block text-gray-700 text-sm font-medium mb-2">
-                Or select from a list:
+                What tree species are you interested in? / ¿Qué especies de árboles te interesan?
             </label>
             <select
                 id="species-select"
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
             >
-                <option value="">-- Select a species --</option>
+                <option value="">-- select here / seleccione aquí --</option>
                 <!-- Options will be populated by JavaScript -->
             </select>
         </div>
@@ -67,89 +59,89 @@
     </div>
 
     <script>
-        // This is the species-to-library mapping data from the previous interaction.
-        const speciesLibraryMappingCSV = `Common Name,Spanish Name,Latin Name,Butler Hike-and-Bike Trail,Butler Park,Carver,Central,Cepeda,Hampton,Howson,John Gillum,Little Walnut Creek,Menchaca Road,Milwood,PDC,Pease Park,Pleasant Hill,Ruiz,Southeast,Spicewood Springs,Terrazas,Twin Oaks,University Hills,Willie Mae Kirk,Windsor Park,Yarborough
-Bigtooth Maple,Arce Palo de Azúcar,Acer grandidentatum,,Yes,,,,,,,,,,,,,,,,,,,,,
-Boxelder,Arce Negundo,Acer negundo,,Yes,,,Yes,,,,,,,,,,,,,,,Yes,,,Yes
-Anacaho Orchid Tree,Pata de Cabra Blanca,Bauhinia lunarioides,,Yes,,Yes,,,Yes,Yes,,,,,,,,Yes,,,,,,,
-Pecan,Pecán,Carya illinoensis,,Yes,,,Yes,,Yes,Yes,,,,Yes,,Yes,,,Yes,Yes,,,Yes,,Yes
-Sugar Hackberry,Palo Blanco,Celtis laevigata,,Yes,,,Yes,,,Yes,,Yes,Yes,,,Yes,,,Yes,,,,Yes,,Yes
-Texas Redbud,Cercis tejano,Cercis canadensis var. texensis,,Yes,Yes,,,,,,Yes,Yes,,Yes,,,Yes,Yes,Yes,,,Yes,,,
-Desert Willow,Mimbre,Chilopsis linearis,,Yes,,Yes,,,,,,,,Yes,,,,,,Yes,,,,,Yes
-Chitalpa,Chitalpa,Chitalpa tashkentensis ,,,,,,Yes,,,,,,,,,,,,,Yes,,,,
-Leyland Cypress,Ciprés de Leyland,Cupressus × leylandii,,,,,,,,Yes,,,,,,,,,,,,,,,
-Arizona Cypress,Ciprés de Arizona,Cupressus arizonica,,,,,,,,,,,,,,,,,,,Yes,,,,
-Texas Mountian Laurel,Colorín,Dermatophyllum secundiflorum,,Yes,,Yes,Yes,Yes,Yes,,,,Yes,,,,,,Yes,,,Yes,,Yes,
-Texas Persimmon,Chapote negro,Diospyros texana,,Yes,,,,Yes,,,Yes,,Yes,,,,,,,,Yes,,,,
-Texas Ash,Fresno Blanco Americano,Fraxinus albicans,,,,Yes,,Yes,,,Yes,,Yes,,,,,,,,Yes,,,,
-Arizona Ash,Fresno de Arizona,Fraxinus velutina,,,,,,,,Yes,,Yes,,Yes,,Yes,,,,,,,Yes,,
-Possumhaw Holly,Acebo de Pantano,Ilex decidua,,Yes,,Yes,,,,,,,,,,,,Yes,,Yes,,,,,
-Yaupon Holly,Acebo Yaupón,Ilex vomitoria,,Yes,Yes,,,,Yes,,,,,,,Yes,Yes,Yes,Yes,,,Yes,,,
-Ashe Juniper,Enebro de Frutos Azules,Juniperus asheii,,,,,,,,,,,Yes,,,Yes,Yes,Yes,,,,,,,
-Eastern Red Cedar,Enebro de Virginia,Juniperus virginiana,,,,,,,,,,,,,,,,,Yes,,,,,,
-Crape Myrtle,Árbol de Júpiter,Lagerstroemia indica,,Yes,Yes,,,,Yes,,Yes,Yes,Yes,Yes,,Yes,,Yes,Yes,,,Yes,,,
-Golden-Ball Leadtree,Árbol Peto,Leucaena retusa,,,,Yes,,,Yes,,,,,,,,,,,,,,,,
-Privet,Ligustros,Ligustrum lucidum,,,,,,,,,,,,,,Yes,,,,,,,,,
-Sweetgum,Liquidámbar,Liquidambar styraciflua,,,,,,,,,,,,,,,,,,,,,,,Yes
-Osage Orange,Naranjo de los Osages,Maclura pomifera,,,,,,,,,,,,,,,,,,,,,Yes,,
-Chinaberry,Cinamomo,Melia azedarach,,Yes,,,Yes,,,,,,,Yes,,,,,,,,,,,Yes
-Wax Myrtle,Árbol de la Cera,Morella cerifera,,,Yes,,,,,,,,,,,,,,,,,,,,
-Mulberry,Morera,Morus sp.,,Yes,,,Yes,,,,,Yes,,,,,Yes,,,,,,,,
-Mesquite,Mezquite,Neltuma glandulosa,,,,Yes,,,,,,,,,,,Yes,Yes,,,,,,,
-Palo Verde,Palo Verde,Parkinsonia aculeata,,,,,,,,,,,,,,,,,,,,,,,Yes
-Chinese Pistache,Pistacho Chino ,Pistacia chinensis,,,,,Yes,Yes,,,,Yes,,,,,,,,,,,,,Yes
-Mexican Sycamore,Sicomoro Mexicano,Platanus mexicana,,,,Yes,,,,,,,,Yes,,,,,,,,,,,
-American Sycamore,sicomoro americano,Platanus occidentalis,,,,,,,Yes,,,,,,,,Yes,,,,,,,,
-Asiatic Arborvitae,Tuya Asiática,Platycladus orientalis,,Yes,,,,,,,,,,,,,,,,,,,,,
-Cottonwood,Chopo Americano ,Populus deltoides,,Yes,,,Yes,,,,,,,,,,,,,,,Yes,,,
-Cherry Laurel,,Prunus caroliniana,,,Yes,,,,,,,,,,,,,,,,,,,,
-Mexican Plum,Ciruelo Mexicano ,Prunus mexicana,,,,,,Yes,,,,,,,,Yes,,Yes,Yes,,Yes,,,Yes,
-Pomegranate,Granada,Punica granatum,,,,,,,,,,,,,,,,,,,,,,Yes,
-Bradford Pear,Peral de Flor,Pyrus calleryana,,,,,Yes,Yes,,,,,,,,,,,,,,,,,
-Live Oak,Encino,Quercus fusiformis,,,,,,Yes,,,,Yes,Yes,,,Yes,,,Yes,,,,Yes,,
-Lacey Oak,Encino Azul,Quercus laceyi,,Yes,,,,,,,,,,Yes,,,,,,,,Yes,,,Yes
-Bur Oak,Roble Bur,Quercus macrocarpa,,Yes,,,Yes,,,,Yes,,,,,,Yes,Yes,,Yes,Yes,,,Yes,
-Chinkapin Oak,Encino de Piedras,Quercus muhlenbergii,,Yes,Yes,,,Yes,,Yes,,,,,,,,Yes,,Yes,,,,,
-Monterrey Oak,Encino Roble,Quercus polymorpha,,,Yes,,,Yes,,Yes,,,,Yes,,,,,Yes,Yes,Yes,Yes,,Yes,
-Shumard Oak,Encino de Shumard,Quercus shumardii,,Yes,Yes,,,,Yes,,,,,Yes,,,Yes,,,Yes,,Yes,Yes,,
-Live Oak,Encino,Quercus virginiana,,Yes,,Yes,,,Yes,,Yes,,,Yes,,,Yes,,,Yes,Yes,Yes,Yes,Yes,Yes
-Black Willow,Sauce Negro,Salix nigra,,Yes,,,,,,,,,,,,,,,,,,,,,
-Soapberry,Jaboncillo,Sapindus saponaria,,,,,,,,,,,,,,,,,,,,,,Yes,
-Gum Bumelia,Coma,Sideroxylon lanuginosum,,,,,,,,,,Yes,,,,,Yes,,,,,,,,
-Baldcypress,Ciprés de los Pantanos,Taxodium distichum,,Yes,,Yes,,,,,,,,Yes,,Yes,,,,,Yes,,,,
-Chinese Tallow,Árbol de sebo,Triadica sebifera,,Yes,,,,,,,,,,,,,,,,,,,,,Yes
-American Elm,Olmo americano,Ulmus americana,,Yes,,,Yes,,,,,,,,,,,,,,Yes,,,,
-Cedar Elm,Cedro Olmo,Ulmus crassifolia,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,,Yes,Yes,Yes,Yes,Yes,,,Yes,Yes,Yes
-Lacebark Elm,Olmo Chino,Ulmus parvifolia,,,,,,,,Yes,,,,,,,,,,,Yes,,,,Yes
-Mexican Buckeye,Monilla,Ungnadia speciosa,,,,,,Yes,,Yes,,,,,,,,,,,Yes,,,Yes,
-Chaste Tree,Sauce Gatillo,Vitex agnus-castus,,,,,,,,,,,,,,,,Yes,,,,,,,
-Prickly Ash,Árbol de Dolor de Dientes,Zanthoxylum hirsutum,,,,,,,,,,,Yes,,,,,,,,,,,,`;
+        // This is the species-to-library mapping data from the uploaded CSV.
+        const speciesLibraryMappingCSV = `Common Name,Spanish Name,Latin Name,Butler Hike-and-Bike Trail,Butler Park,Carver Library,Central Library,Cepeda Library,Hampton Library,Howson Library,John Gillum Library,Little Walnut Creek Library,Menchaca Library,Milwood Library,PDC,Pease Park,Pleasant Hill Library,Ruiz Library,Southeast Library,Terrazas Library,Twin Oaks Library,University Hills Library,Willie Mae Kirk Library,Windsor Park Library,Yarborough Library
+Bigtooth Maple,Arce Palo de Azúcar,Acer grandidentatum,,Yes,,,,,,,,,,,,,,,,,,,,
+Boxelder,Arce Negundo,Acer negundo,,Yes,,,Yes,,,,,,,,,,,,,,Yes,,,Yes
+Anacaho Orchid Tree,Pata de Cabra Blanca,Bauhinia lunarioides,,Yes,,Yes,,,Yes,Yes,,,,,,,,Yes,,,,,,
+Pecan,Pecán,Carya illinoensis,,Yes,,,Yes,,Yes,Yes,,,,Yes,,Yes,,,Yes,,,Yes,,Yes
+Sugar Hackberry,Palo Blanco,Celtis laevigata,,Yes,,,Yes,,,Yes,,Yes,Yes,,,Yes,,,,,,Yes,,Yes
+Texas Redbud,Cercis tejano,Cercis canadensis var. texensis,,Yes,Yes,,,,,,Yes,Yes,,Yes,,,Yes,Yes,,,Yes,,,
+Desert Willow,Mimbre,Chilopsis linearis,,Yes,,Yes,,,,,,,,Yes,,,,,Yes,,,,,Yes
+Chitalpa,Chitalpa,Chitalpa tashkentensis ,,,,,,Yes,,,,,,,,,,,,Yes,,,,
+Leyland Cypress,Ciprés de Leyland,Cupressus × leylandii,,,,,,,,Yes,,,,,,,,,,,,,,
+Arizona Cypress,Ciprés de Arizona,Cupressus arizonica,,,,,,,,,,,,,,,,,,Yes,,,,
+Texas Mountian Laurel,Colorín,Dermatophyllum secundiflorum,,Yes,,Yes,Yes,Yes,Yes,,,,Yes,,,,,,,,Yes,,Yes,
+Texas Persimmon,Chapote negro,Diospyros texana,,Yes,,,,Yes,,,Yes,,Yes,,,,,,,Yes,,,,
+Texas Ash,Fresno Blanco Americano,Fraxinus albicans,,,,Yes,,Yes,,,Yes,,Yes,,,,,,,Yes,,,,
+Arizona Ash,Fresno de Arizona,Fraxinus velutina,,,,,,,,Yes,,Yes,,Yes,,Yes,,,,,,Yes,,
+Possumhaw Holly,Acebo de Pantano,Ilex decidua,,Yes,,Yes,,,,,,,,,,,,Yes,Yes,,,,,
+Yaupon Holly,Acebo Yaupón,Ilex vomitoria,,Yes,Yes,,,,Yes,,,,,,,Yes,Yes,Yes,,,Yes,,,
+Ashe Juniper,Enebro de Frutos Azules,Juniperus asheii,,,,,,,,,,,Yes,,,Yes,Yes,Yes,,,,,,
+Eastern Red Cedar,Enebro de Virginia,Juniperus virginiana,,,,,,,,,,,,,,,,,,,,,,
+Crape Myrtle,Árbol de Júpiter,Lagerstroemia indica,,Yes,Yes,,,,Yes,,Yes,Yes,Yes,Yes,,Yes,,Yes,,,Yes,,,
+Golden-Ball Leadtree,Árbol Peto,Leucaena retusa,,,,Yes,,,Yes,,,,,,,,,,,,,,,
+Privet,Ligustros,Ligustrum lucidum,,,,,,,,,,,,,,Yes,,,,,,,,
+Sweetgum,Liquidámbar,Liquidambar styraciflua,,,,,,,,,,,,,,,,,,,,,,Yes
+Osage Orange,Naranjo de los Osages,Maclura pomifera,,,,,,,,,,,,,,,,,,,,Yes,,
+Chinaberry,Cinamomo,Melia azedarach,,Yes,,,Yes,,,,,,,Yes,,,,,,,,,,Yes
+Wax Myrtle,Árbol de la Cera,Morella cerifera,,,Yes,,,,,,,,,,,,,,,,,,,
+Mulberry,Morera,Morus sp.,,Yes,,,Yes,,,,,Yes,,,,,Yes,,,,,,,
+Mesquite,Mezquite,Neltuma glandulosa,,,,Yes,,,,,,,,,,,Yes,Yes,,,,,,
+Palo Verde,Palo Verde,Parkinsonia aculeata,,,,,,,,,,,,,,,,,,,,,,Yes
+Chinese Pistache,Pistacho Chino ,Pistacia chinensis,,,,,Yes,Yes,,,,Yes,,,,,,,,,,,,Yes
+Mexican Sycamore,Sicomoro Mexicano,Platanus mexicana,,,,Yes,,,,,,,,Yes,,,,,,,,,,
+American Sycamore,sicomoro americano,Platanus occidentalis,,,,,,,Yes,,,,,,,,Yes,,,,,,,
+Asiatic Arborvitae,Tuya Asiática,Platycladus orientalis,,Yes,,,,,,,,,,,,,,,,,,,,
+Cottonwood,Chopo Americano ,Populus deltoides,,Yes,,,Yes,,,,,,,,,,,,,,Yes,,,
+Cherry Laurel,,Prunus caroliniana,,,Yes,,,,,,,,,,,,,,,,,,,
+Mexican Plum,Ciruelo Mexicano ,Prunus mexicana,,,,,,Yes,,,,,,,,Yes,,Yes,,Yes,,,Yes,
+Pomegranate,Granada,Punica granatum,,,,,,,,,,,,,,,,,,,,,Yes,
+Bradford Pear,Peral de Flor,Pyrus calleryana,,,,,Yes,Yes,,,,,,,,,,,,,,,,
+Live Oak,Encino,Quercus fusiformis,,,,,,Yes,,,,Yes,Yes,,,Yes,,,,,,Yes,,
+Lacey Oak,Encino Azul,Quercus laceyi,,Yes,,,,,,,,,,Yes,,,,,,,Yes,,,Yes
+Bur Oak,Roble Bur,Quercus macrocarpa,,Yes,,,Yes,,,,Yes,,,,,,Yes,Yes,Yes,Yes,,,Yes,
+Chinkapin Oak,Encino de Piedras,Quercus muhlenbergii,,Yes,Yes,,,Yes,,Yes,,,,,,,,Yes,Yes,,,,,
+Monterrey Oak,Encino Roble,Quercus polymorpha,,,Yes,,,Yes,,Yes,,,,Yes,,,,,Yes,Yes,Yes,,Yes,
+Shumard Oak,Encino de Shumard,Quercus shumardii,,Yes,Yes,,,,Yes,,,,,Yes,,,Yes,,Yes,,Yes,Yes,,
+Live Oak,Encino,Quercus virginiana,,Yes,,Yes,,,Yes,,Yes,,,Yes,,,Yes,,Yes,Yes,Yes,Yes,Yes,Yes
+Black Willow,Sauce Negro,Salix nigra,,Yes,,,,,,,,,,,,,,,,,,,,
+Soapberry,Jaboncillo,Sapindus saponaria,,,,,,,,,,,,,,,,,,,,,Yes,
+Gum Bumelia,Coma,Sideroxylon lanuginosum,,,,,,,,,,Yes,,,,,Yes,,,,,,,
+Baldcypress,Ciprés de los Pantanos,Taxodium distichum,,Yes,,Yes,,,,,,,,Yes,,Yes,,,,Yes,,,,
+Chinese Tallow,Árbol de sebo,Triadica sebifera,,Yes,,,,,,,,,,,,,,,,,,,,Yes
+American Elm,Olmo americano,Ulmus americana,,Yes,,,Yes,,,,,,,,,,,,,Yes,,,,
+Cedar Elm,Cedro Olmo,Ulmus crassifolia,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,,Yes,Yes,Yes,Yes,,,Yes,Yes,Yes
+Lacebark Elm,Olmo Chino,Ulmus parvifolia,,,,,,,,Yes,,,,,,,,,,Yes,,,,Yes
+Mexican Buckeye,Monilla,Ungnadia speciosa,,,,,,Yes,,Yes,,,,,,,,,,Yes,,,Yes,
+Chaste Tree,Sauce Gatillo,Vitex agnus-castus,,,,,,,,,,,,,,,,Yes,,,,,,
+Prickly Ash,Árbol de Dolor de Dientes,Zanthoxylum hirsutum,,,,,,,,,,,Yes,,,,,,,,,,,`;
 
         // This is the new address data from the most recent CSV upload.
         const addressCSV = `Location,Address
 Butler Hike-and-Bike Trail,100 Trail Ave
 Butler Park,2100 Barton Springs Rd
-Carver,1161 Angelina St
-Central,710 W Cesar Chavez St
-Cepeda,651 N Pleasant Valley Rd
-Hampton,5125 Convict Hill Rd
-Howson,2500 Exposition Blvd
-John Gillum,6700 Circle S Rd
-Little Walnut Creek,7200 Hart Ln
-Menchaca Road,5500 Menchaca Rd
-Milwood,12500 Amberglen Blvd
+Carver Library,1161 Angelina St
+Central Library,710 W Cesar Chavez St
+Cepeda Library,651 N Pleasant Valley Rd
+Hampton Library,5125 Convict Hill Rd
+Howson Library,2500 Exposition Blvd
+John Gillum Library,6700 Circle S Rd
+Little Walnut Creek Library,7200 Hart Ln
+Menchaca Library,5500 Menchaca Rd
+Milwood Library,12500 Amberglen Blvd
 PDC,5507 S IH 35 Frontage Rd
 Pease Park,1100 Kingsbury St
-Pleasant Hill,700 W William Cannon Dr
-Ruiz,1600 Grove Blvd
-Southeast,5803 Nuckols Crossing Rd
+Pleasant Hill Library,700 W William Cannon Dr
+Ruiz Library,1600 Grove Blvd
+Southeast Library,5803 Nuckols Crossing Rd
 Spicewood Springs,8637 Spicewood Springs Rd
-Terrazas,1105 E Cesar Chavez St
-Twin Oaks,1801 S 5th St
-University Hills,4721 Loyola Ln
-Willie Mae Kirk,3101 Oak Springs Dr
-Windsor Park,5833 Westminster Dr
-Yarborough,2200 Hancock Dr`;
+Terrazas Library,1105 E Cesar Chavez St
+Twin Oaks Library,1801 S 5th St
+University Hills Library,4721 Loyola Ln
+Willie Mae Kirk Library,3101 Oak Springs Dr
+Windsor Park Library,5833 Westminster Dr
+Yarborough Library,2200 Hancock Dr`;
 
         // Function to parse the address CSV into a mapping object
         function parseAddressCSV(csv) {
@@ -181,14 +173,19 @@ Yarborough,2200 Hancock Dr`;
 
             for (let i = 1; i < lines.length; i++) {
                 const parts = lines[i].split(',');
-                const commonName = parts[0].trim(); // Common Name is the first column
+                // Extract Common Name, Spanish Name, and Latin Name
+                const commonName = parts[0].trim();
+                const spanishName = parts[1].trim();
+                const latinName = parts[2].trim();
 
                 for (let j = 0; j < libraryNames.length; j++) {
                     const cellValue = parts[j + 3].trim(); // +3 to account for Common, Spanish, Latin Name
                     const libraryName = libraryNames[j].trim();
                     if (cellValue === 'Yes' || cellValue === 'X') {
                         parsedData.push({
-                            species: commonName,
+                            commonName: commonName,
+                            spanishName: spanishName,
+                            latinName: latinName,
                             library: libraryName,
                             // Lookup the address from the libraryAddresses object
                             address: libraryAddresses[libraryName] || "Address Not Available"
@@ -203,51 +200,80 @@ Yarborough,2200 Hancock Dr`;
         const treeData = parseSpeciesLibraryCSV(speciesLibraryMappingCSV);
 
         // Get DOM elements
-        const speciesSearchInput = document.getElementById('species-search');
         const speciesSelectDropdown = document.getElementById('species-select');
         const resultsDiv = document.getElementById('results');
         const refreshButton = document.getElementById('refresh-button');
 
         // Function to populate the dropdown with unique species
         function populateSpeciesDropdown() {
-            const uniqueSpecies = [...new Set(treeData.map(item => item.species))].filter(Boolean).sort();
-            speciesSelectDropdown.innerHTML = '<option value="">-- Select a species --</option>'; // Clear existing options
-            uniqueSpecies.forEach(species => {
+            // Create a set to keep track of unique common/spanish/latin name combinations
+            const uniqueSpeciesInfo = [];
+            const seenCombinations = new Set();
+
+            treeData.forEach(item => {
+                const combinationKey = `${item.commonName}|${item.spanishName}|${item.latinName}`;
+                if (!seenCombinations.has(combinationKey)) {
+                    uniqueSpeciesInfo.push({
+                        common: item.commonName,
+                        spanish: item.spanishName,
+                        latin: item.latinName
+                    });
+                    seenCombinations.add(combinationKey);
+                }
+            });
+
+            // Sort unique species by common name
+            uniqueSpeciesInfo.sort((a, b) => a.common.localeCompare(b.common));
+
+            speciesSelectDropdown.innerHTML = '<option value="">-- select here / seleccione aquí --</option>'; // Clear existing options
+            uniqueSpeciesInfo.forEach(species => {
                 const option = document.createElement('option');
-                option.value = species;
-                option.textContent = species;
+                option.value = species.common; // The value is the common name for lookup
+                // Display formatted text with bold English and smaller Spanish and italicized Latin names
+                option.innerHTML = `<span class="font-bold">${species.common}</span> / <span class="text-sm">${species.spanish}</span> / <span class="text-sm italic">${species.latin}</span>`;
                 speciesSelectDropdown.appendChild(option);
             });
         }
 
-        // Function to perform the search and display results
-        function searchTreeSpecies(searchTerm) {
-            const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
+        // Function to display results for the selected tree species
+        function displayTreeSpeciesResults(selectedSpecies) {
+            const lowerCaseSelectedSpecies = selectedSpecies.toLowerCase().trim();
 
-            if (!lowerCaseSearchTerm) {
+            if (!lowerCaseSelectedSpecies) {
                 resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here.</p>';
                 return;
             }
 
             const matchedEntries = treeData.filter(item =>
-                item.species.toLowerCase() === lowerCaseSearchTerm
+                item.commonName.toLowerCase() === lowerCaseSelectedSpecies
             );
 
             if (matchedEntries.length === 0) {
-                resultsDiv.innerHTML = `<p class="text-red-600 text-center">No results found for "${searchTerm}".</p>`;
+                resultsDiv.innerHTML = `<p class="text-red-600 text-center">No results found for "${selectedSpecies}".</p>`;
                 return;
             }
 
             const uniqueLibraries = new Map(); // Map<libraryName, address>
+            let displayCommonName = selectedSpecies;
+            let displaySpanishName = "";
+            let displayLatinName = "";
+
+            // Get the full details for the selected species (assuming consistent naming across locations)
+            const firstMatchedEntry = matchedEntries[0];
+            if (firstMatchedEntry) {
+                displayCommonName = firstMatchedEntry.commonName;
+                displaySpanishName = firstMatchedEntry.spanishName;
+                displayLatinName = firstMatchedEntry.latinName;
+            }
 
             matchedEntries.forEach(entry => {
                 uniqueLibraries.set(entry.library, entry.address);
             });
 
-            let resultsHtml = `<h2 class="text-xl font-semibold mb-3 text-gray-700">Found "${searchTerm}" at:</h2>`;
+            let resultsHtml = `<h2 class="text-xl font-semibold mb-3 text-gray-700">Found "${displayCommonName} / ${displaySpanishName} / <i>${displayLatinName}</i>" at:</h2>`;
             resultsHtml += '<ul class="list-disc pl-5 space-y-2">';
             if (uniqueLibraries.size === 0) {
-                 resultsHtml += `<p class="text-red-600 text-center">No specific library locations found for "${searchTerm}".</p>`;
+                resultsHtml += `<p class="text-red-600 text-center">No specific library locations found for "${selectedSpecies}".</p>`;
             } else {
                 uniqueLibraries.forEach((address, libraryName) => {
                     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address + ", Austin, TX")}`;
@@ -266,28 +292,17 @@ Yarborough,2200 Hancock Dr`;
             resultsDiv.innerHTML = resultsHtml;
         }
 
-        // Event listener for search input field
-        speciesSearchInput.addEventListener('input', (event) => {
-            const searchTerm = event.target.value;
-            if (speciesSelectDropdown.value !== "" && speciesSelectDropdown.value !== searchTerm) {
-                speciesSelectDropdown.value = "";
-            }
-            searchTreeSpecies(searchTerm);
-        });
-
         // Event listener for select dropdown
         speciesSelectDropdown.addEventListener('change', (event) => {
             const selectedSpecies = event.target.value;
-            speciesSearchInput.value = selectedSpecies;
-            searchTreeSpecies(selectedSpecies);
+            displayTreeSpeciesResults(selectedSpecies);
         });
 
         // Event listener for the refresh button
         refreshButton.addEventListener('click', () => {
-            speciesSearchInput.value = '';
-            speciesSelectDropdown.value = '';
+            speciesSelectDropdown.value = ''; // Clear the dropdown selection
             resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here.</p>';
-            speciesSearchInput.focus();
+            speciesSelectDropdown.focus(); // Set focus back to the dropdown
         });
 
         // Initialize the dropdown on page load

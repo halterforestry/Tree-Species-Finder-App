@@ -44,7 +44,7 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
             >
                 <option value="">-- select here / seleccione aquí --</option>
-                <!-- Options will be populated by JavaScript -->
+                <!-- Species Options will be populated by JavaScript -->
             </select>
         </div>
 
@@ -52,15 +52,16 @@
             <p class="block text-gray-700 text-sm font-medium mb-2">
                 Or search by library or park name here / buscar ubicación aquí:
             </p>
-            <input
-                type="text"
-                id="location-search"
-                placeholder="e.g., Central Library"
+            <select
+                id="location-select"
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
-            />
+            >
+                <option value="">-- select here / seleccione aquí --</option>
+                <!-- Location Options will be populated by JavaScript -->
+            </select>
         </div>
 
-        <div class="mt-4 mb-8 flex justify-end"> <!-- Changed to justify-end for right alignment -->
+        <div class="mt-4 mb-8 flex justify-end">
             <button
                 id="refresh-button"
                 class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 flex items-center"
@@ -113,10 +114,10 @@ Asiatic Arborvitae,Tuya Asiática,Platycladus orientalis,,Yes,,,,,,,,,,,,,,,,,,,
 Cottonwood,Chopo Americano ,Populus deltoides,,Yes,,,Yes,,,,,,,,,,,,,,Yes,,,
 Cherry Laurel,,Prunus caroliniana,,,Yes,,,,,,,,,,,,,,,,,,,
 Mexican Plum,Ciruelo Mexicano ,Prunus mexicana,,,,,,Yes,,,,,,,,Yes,,Yes,,Yes,,,Yes,
-Pomegranate,Granada,Punica granatum,,,,,,,,,,,,,,,,,,,,,Yes,
+Pomegranate,Granada,Punica granatum,,,,,,,,,,,,,,,,..,,,Yes,
 Bradford Pear,Peral de Flor,Pyrus calleryana,,,,,Yes,Yes,,,,,,,,,,,,,,,,
 Live Oak,Encino,Quercus fusiformis,,,,,,Yes,,,,Yes,Yes,,,Yes,,,,,,Yes,,
-Lacey Oak,Encino Azul,Quercus laceyi,,Yes,,,,,,,,,,Yes,,,,,,,Yes,,,Yes
+Lacey Oak,Encino Azul,Quercus laceyi,,Yes,,,,,,,,..Yes,,,,,,,Yes,,,Yes
 Bur Oak,Roble Bur,Quercus macrocarpa,,Yes,,,Yes,,,,Yes,,,,,,Yes,Yes,Yes,Yes,,,Yes,
 Chinkapin Oak,Encino de Piedras,Quercus muhlenbergii,,Yes,Yes,,,Yes,,Yes,,,,,,,,Yes,Yes,,,,,
 Monterrey Oak,Encino Roble,Quercus polymorpha,,,Yes,,,Yes,,Yes,,,,Yes,,,,,Yes,Yes,Yes,,Yes,
@@ -130,7 +131,7 @@ Chinese Tallow,Árbol de sebo,Triadica sebifera,,Yes,,,,,,,,,,,,,,,,,,,,Yes
 American Elm,Olmo americano,Ulmus americana,,Yes,,,Yes,,,,,,,,..,,,Yes,,,,
 Cedar Elm,Cedro Olmo,Ulmus crassifolia,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,,Yes,Yes,Yes,Yes,,,Yes,Yes,Yes
 Lacebark Elm,Olmo Chino,Ulmus parvifolia,,,,,,,,Yes,,,,,,,,,,Yes,,,,Yes
-Mexican Buckeye,Monilla,Ungnadia speciosa,,,,..Yes,,Yes,,,,,,,,,,Yes,,,Yes,
+Mexican Buckeye,Monilla,Ungnadia speciosa,,,,..Yes,,Yes,,,,,,,,..Yes,,,Yes,
 Chaste Tree,Sauce Gatillo,Vitex agnus-castus,,,,,,,,,,,,,,,,Yes,,,,,,
 Prickly Ash,Árbol de Dolor de Dientes,Zanthoxylum hirsutum,,,,,,,,,,,Yes,,,,,,,,,,,`;
 
@@ -231,44 +232,12 @@ Yarborough Library,2200 Hancock Dr`;
 
         // Get DOM elements
         const speciesSelectDropdown = document.getElementById('species-select');
-        const locationSearchInput = document.getElementById('location-search');
+        const locationSelectDropdown = document.getElementById('location-select'); // New dropdown for locations
         const resultsDiv = document.getElementById('results');
         const refreshButton = document.getElementById('refresh-button');
 
-        // Levenshtein Distance function for fuzzy matching
-        function levenshteinDistance(a, b) {
-            const matrix = [];
-
-            // increment along the first column of each row
-            for (let i = 0; i <= b.length; i++) {
-                matrix[i] = [i];
-            }
-
-            // increment each column in the first row
-            for (let j = 0; j <= a.length; j++) {
-                matrix[0][j] = j;
-            }
-
-            // Fill in the rest of the matrix
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b.charAt(i - 1) === a.charAt(j - 1)) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1, // substitution
-                            matrix[i][j - 1] + 1,     // insertion
-                            matrix[i - 1][j] + 1      // deletion
-                        );
-                    }
-                }
-            }
-            return matrix[b.length][a.length];
-        }
-
-        // Function to populate the dropdown with unique species
+        // Function to populate the species dropdown with unique species
         function populateSpeciesDropdown() {
-            // Create a set to keep track of unique common/spanish/latin name combinations
             const uniqueSpeciesInfo = [];
             const seenCombinations = new Set();
 
@@ -284,16 +253,33 @@ Yarborough Library,2200 Hancock Dr`;
                 }
             });
 
-            // Sort unique species by common name
             uniqueSpeciesInfo.sort((a, b) => a.common.localeCompare(b.common));
 
-            speciesSelectDropdown.innerHTML = '<option value="">-- select here / seleccione aquí --</option>'; // Clear existing options
+            speciesSelectDropdown.innerHTML = '<option value="">-- select here / seleccione aquí --</option>';
             uniqueSpeciesInfo.forEach(species => {
                 const option = document.createElement('option');
-                option.value = species.common; // The value is the common name for lookup
-                // Display formatted text with bold English and smaller Spanish and italicized Latin names
+                option.value = species.common;
                 option.innerHTML = `<span class="font-bold">${species.common}</span> / <span class="text-sm">${species.spanish}</span> / <span class="text-sm italic">${species.latin}</span>`;
                 speciesSelectDropdown.appendChild(option);
+            });
+        }
+
+        // Function to populate the location dropdown with unique library/park names and addresses
+        function populateLocationDropdown() {
+            const uniqueLocations = new Map(); // Using a Map to maintain order and unique keys
+            for (const loc in libraryAddresses) {
+                uniqueLocations.set(loc, libraryAddresses[loc]);
+            }
+
+            // Convert to array and sort alphabetically by location name
+            const sortedLocations = Array.from(uniqueLocations.entries()).sort(([nameA,], [nameB,]) => nameA.localeCompare(nameB));
+
+            locationSelectDropdown.innerHTML = '<option value="">-- select here / seleccione aquí --</option>';
+            sortedLocations.forEach(([locationName, address]) => {
+                const option = document.createElement('option');
+                option.value = locationName; // The value is the location name for lookup
+                option.innerHTML = `<span class="font-bold">${locationName}</span> - ${address}`;
+                locationSelectDropdown.appendChild(option);
             });
         }
 
@@ -320,7 +306,6 @@ Yarborough Library,2200 Hancock Dr`;
             let displaySpanishName = "";
             let displayLatinName = "";
 
-            // Get the full details for the selected species (assuming consistent naming across locations)
             const firstMatchedEntry = matchedEntries[0];
             if (firstMatchedEntry) {
                 displayCommonName = firstMatchedEntry.commonName;
@@ -337,7 +322,6 @@ Yarborough Library,2200 Hancock Dr`;
             if (uniqueLibraries.size === 0) {
                 resultsHtml += `<p class="text-red-600 text-center">No specific library locations found for "${selectedSpecies}".</p>`;
             } else {
-                // Sort libraries alphabetically
                 const sortedLibraries = Array.from(uniqueLibraries.entries()).sort(([nameA,], [nameB,]) => nameA.localeCompare(nameB));
 
                 sortedLibraries.forEach(([libraryName, address]) => {
@@ -358,69 +342,34 @@ Yarborough Library,2200 Hancock Dr`;
         }
 
         // Function to display species found at a specific location
-        function displayLocationSpeciesResults(searchQuery) {
-            const lowerCaseQuery = searchQuery.toLowerCase().trim();
+        function displayLocationSpeciesResults(selectedLocation) {
+            const lowerCaseSelectedLocation = selectedLocation.toLowerCase().trim();
 
-            if (!lowerCaseQuery) {
+            if (!lowerCaseSelectedLocation) {
                 resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>';
                 return;
             }
 
-            // Fuzzy search for the location name
-            let bestMatchLocationName = null;
-            let minDistance = Infinity;
-            // A dynamic threshold based on query length. This can be adjusted.
-            // For short queries, a smaller threshold is better. For longer queries, allow more errors.
-            const threshold = Math.floor(lowerCaseQuery.length / 3) + 1;
-
-            // First, try exact or very close matches using Levenshtein distance
-            for (const loc in libraryAddresses) {
-                const currentDistance = levenshteinDistance(lowerCaseQuery, loc.toLowerCase());
-                if (currentDistance <= minDistance) { // Use <= to prefer earlier matches if distance is same
-                    minDistance = currentDistance;
-                    bestMatchLocationName = loc;
-                }
-            }
-
-            // If the best Levenshtein match is above our fuzzy threshold,
-            // or if no exact match, try partial string matching
-            if (bestMatchLocationName === null || minDistance > threshold) {
-                let partialMatchFound = false;
-                for (const loc in libraryAddresses) {
-                    // Check if the location name includes the query, or vice-versa for shorter queries
-                    if (loc.toLowerCase().includes(lowerCaseQuery) || lowerCaseQuery.includes(loc.toLowerCase())) {
-                        bestMatchLocationName = loc;
-                        partialMatchFound = true;
-                        break; // Found a good partial match, break and use this
-                    }
-                }
-                if (!partialMatchFound) {
-                    resultsDiv.innerHTML = `<p class="text-red-600 text-center">No location found matching "${searchQuery}".</p>`;
-                    return;
-                }
-            }
-
-            const locationAddress = libraryAddresses[bestMatchLocationName];
+            const locationAddress = libraryAddresses[selectedLocation];
             const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationAddress + ", Austin, TX")}`;
 
             const speciesAtLocation = treeData.filter(item =>
-                item.library.toLowerCase() === bestMatchLocationName.toLowerCase()
+                item.library.toLowerCase() === lowerCaseSelectedLocation
             );
 
             if (speciesAtLocation.length === 0) {
                 resultsDiv.innerHTML = `
-                    <h2 class="text-xl font-semibold mb-3 text-gray-700">${bestMatchLocationName}</h2>
+                    <h2 class="text-xl font-semibold mb-3 text-gray-700">${selectedLocation}</h2>
                     <p class="text-gray-800 mb-4">
                         <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="address-link text-lg">
                             ${locationAddress}
                         </a>
                     </p>
-                    <p class="text-red-600 text-center">No tree species listed for "${bestMatchLocationName}".</p>
+                    <p class="text-red-600 text-center">No tree species listed for "${selectedLocation}".</p>
                 `;
                 return;
             }
 
-            // Collect unique species info for this location
             const uniqueSpeciesInfo = [];
             const seenCombinations = new Set();
             speciesAtLocation.forEach(item => {
@@ -435,11 +384,10 @@ Yarborough Library,2200 Hancock Dr`;
                 }
             });
 
-            // Sort unique species by common name
             uniqueSpeciesInfo.sort((a, b) => a.common.localeCompare(b.common));
 
             let resultsHtml = `
-                <h2 class="text-xl font-semibold mb-3 text-gray-700">${bestMatchLocationName}</h2>
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">${selectedLocation}</h2>
                 <p class="text-gray-800 mb-4">
                     <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="address-link text-lg">
                         ${locationAddress}
@@ -466,35 +414,37 @@ Yarborough Library,2200 Hancock Dr`;
         speciesSelectDropdown.addEventListener('change', (event) => {
             const selectedSpecies = event.target.value;
             if (selectedSpecies) {
-                locationSearchInput.value = ''; // Clear location search if species is selected
+                locationSelectDropdown.value = ''; // Clear location selection if species is selected
                 displayTreeSpeciesResults(selectedSpecies);
             } else {
                 resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>';
             }
         });
 
-        // Event listener for location search input
-        locationSearchInput.addEventListener('input', (event) => {
-            const searchQuery = event.target.value;
-            if (searchQuery) {
-                speciesSelectDropdown.value = ''; // Clear species dropdown if location is searched
-                displayLocationSpeciesResults(searchQuery);
+        // Event listener for location select dropdown
+        locationSelectDropdown.addEventListener('change', (event) => {
+            const selectedLocation = event.target.value;
+            if (selectedLocation) {
+                speciesSelectDropdown.value = ''; // Clear species selection if location is selected
+                displayLocationSpeciesResults(selectedLocation);
             } else {
                 resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>';
             }
         });
 
-
         // Event listener for the refresh button
         refreshButton.addEventListener('click', () => {
             speciesSelectDropdown.value = ''; // Clear the dropdown selection
-            locationSearchInput.value = ''; // Clear the location search input
+            locationSelectDropdown.value = ''; // Clear the location dropdown selection
             resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>';
-            speciesSelectDropdown.focus(); // Set focus back to the dropdown
+            speciesSelectDropdown.focus(); // Set focus back to the species dropdown
         });
 
-        // Initialize the dropdown on page load
-        document.addEventListener('DOMContentLoaded', populateSpeciesDropdown);
+        // Initialize both dropdowns on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            populateSpeciesDropdown();
+            populateLocationDropdown();
+        });
     </script>
 </body>
 </html>

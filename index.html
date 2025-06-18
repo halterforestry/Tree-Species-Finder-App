@@ -25,10 +25,6 @@
         .species-option .latin {
             font-style: italic;
         }
-        /* Style for search results species names */
-        .species-result-item .latin {
-            font-style: italic;
-        }
     </style>
 </head>
 <body class="p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-screen">
@@ -44,122 +40,121 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
             >
                 <option value="">-- select here / seleccione aquí --</option>
-                <!-- Species Options will be populated by JavaScript -->
+                <!-- Options will be populated by JavaScript -->
             </select>
         </div>
 
         <div class="mb-6">
-            <p class="block text-gray-700 text-sm font-medium mb-2">
+            <label for="location-select" class="block text-gray-700 text-sm font-medium mb-2">
                 Or search by library or park name here / buscar ubicación aquí:
-            </p>
+            </label>
             <select
                 id="location-select"
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
             >
                 <option value="">-- select here / seleccione aquí --</option>
-                <!-- Location Options will be populated by JavaScript -->
+                <!-- Options will be populated by JavaScript -->
             </select>
         </div>
 
-        <div class="mt-4 mb-8 flex justify-end">
+        <div class="mt-8 flex justify-end"> <!-- Changed justify-center to justify-end -->
             <button
                 id="refresh-button"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 flex items-center"
-                title="Reset / Reiniciar"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
             >
-                Reset / Reiniciar
+                Reset / Reiniciar <!-- Changed button text -->
             </button>
         </div>
 
         <div id="results" class="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200 shadow-inner">
-            <p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>
+            <p class="text-gray-600 text-center">Results will appear here.</p>
         </div>
     </div>
 
     <script>
         // This is the species-to-library mapping data from the uploaded CSV.
-        const speciesLibraryMappingCSV = `Common Name,Spanish Name,Latin Name,Butler Hike-and-Bike Trail,Butler Park,Carver Library,Central Library,Cepeda Library,Hampton Library,Howson Library,John Gillum Library,Little Walnut Creek Library,Menchaca Library,Milwood Library,PDC,Pease Park,Pleasant Hill Library,Ruiz Library,Southeast Library,Terrazas Library,Twin Oaks Library,University Hills Library,Willie Mae Kirk Library,Windsor Park Library,Yarborough Library
-Bigtooth Maple,Arce Palo de Azúcar,Acer grandidentatum,,Yes,,,,,,,,,,,,,,,,,,,,
-Boxelder,Arce Negundo,Acer negundo,,Yes,,,Yes,,,,,,,,,,,,,,Yes,,,Yes
-Anacaho Orchid Tree,Pata de Cabra Blanca,Bauhinia lunarioides,,Yes,,Yes,,,Yes,Yes,,,,,,,,Yes,,,,,,
-Pecan,Pecán,Carya illinoensis,,Yes,,,Yes,,Yes,Yes,,,,Yes,,Yes,,,Yes,,,Yes,,Yes
-Sugar Hackberry,Palo Blanco,Celtis laevigata,,Yes,,,Yes,,,Yes,,Yes,Yes,,,Yes,,,,,,Yes,,Yes
-Texas Redbud,Cercis tejano,Cercis canadensis var. texensis,,Yes,Yes,,,,,,Yes,Yes,,Yes,,,Yes,Yes,,,Yes,,,
-Desert Willow,Mimbre,Chilopsis linearis,,Yes,,Yes,,,,,,,,Yes,,,,,Yes,,,,,Yes
-Chitalpa,Chitalpa,Chitalpa tashkentensis ,,,,,,Yes,,,,,,,,,,,,Yes,,,,
-Leyland Cypress,Ciprés de Leyland,Cupressus × leylandii,,,,,,,,Yes,,,,,,,,,,,,,,
-Arizona Cypress,Ciprés de Arizona,Cupressus arizonica,,,,,,,,,,,,,,,,,,Yes,,,,
-Texas Mountian Laurel,Colorín,Dermatophyllum secundiflorum,,Yes,,Yes,Yes,Yes,Yes,,,,Yes,,,,,,,,Yes,,Yes,
-Texas Persimmon,Chapote negro,Diospyros texana,,Yes,,,,Yes,,,Yes,,Yes,,,,,,,Yes,,,,
-Texas Ash,Fresno Blanco Americano,Fraxinus albicans,,,,Yes,,Yes,,,Yes,,Yes,,,,,,,Yes,,,,
-Arizona Ash,Fresno de Arizona,Fraxinus velutina,,,,,,,,Yes,,Yes,,Yes,,Yes,,,,,,Yes,,
-Possumhaw Holly,Acebo de Pantano,Ilex decidua,,Yes,,Yes,,,,,,,,,,,,Yes,Yes,,,,,
-Yaupon Holly,Acebo Yaupón,Ilex vomitoria,,Yes,Yes,,,,Yes,,,,,,,Yes,Yes,Yes,,,Yes,,,
-Ashe Juniper,Enebro de Frutos Azules,Juniperus asheii,,,,,,,,,,,Yes,,,Yes,Yes,Yes,,,,,,
-Eastern Red Cedar,Enebro de Virginia,Juniperus virginiana,,,,,,,,,,,,,,,,,,,,,,
-Crape Myrtle,Árbol de Júpiter,Lagerstroemia indica,,Yes,Yes,,,,Yes,,Yes,Yes,Yes,Yes,,Yes,,Yes,,,Yes,,,
-Golden-Ball Leadtree,Árbol Peto,Leucaena retusa,,,,Yes,,,Yes,,,,,,,,,,,,,,,
-Privet,Ligustros,Ligustrum lucidum,,,,,,,,,,,,,,Yes,,,,,,,,
-Sweetgum,Liquidámbar,Liquidambar styraciflua,,,,,,,,,,,,,,,,,,,,,,Yes
-Osage Orange,Naranjo de los Osages,Maclura pomifera,,,,,,,,,,,,,,,,,,,,Yes,,
-Chinaberry,Cinamomo,Melia azedarach,,Yes,,,Yes,,,,,,,Yes,,,,,,,,,,Yes
-Wax Myrtle,Árbol de la Cera,Morella cerifera,,,Yes,,,,,,,,,,,,,,,,,,,
-Mulberry,Morera,Morus sp.,,Yes,,,Yes,,,,,Yes,,,,,Yes,,,,,,,
-Mesquite,Mezquite,Neltuma glandulosa,,,,Yes,,,,,,,,,,,Yes,Yes,,,,,,
-Palo Verde,Palo Verde,Parkinsonia aculeata,,,,,,,,,,,,,,,,,,,,,,Yes
-Chinese Pistache,Pistacho Chino ,Pistacia chinensis,,,,,Yes,Yes,,,,Yes,,,,,,,,,,,,Yes
-Mexican Sycamore,Sicomoro Mexicano,Platanus mexicana,,,,Yes,,,,,,,,Yes,,,,,,,,,,
-American Sycamore,sicomoro americano,Platanus occidentalis,,,,,,,Yes,,,,,,,,Yes,,,,,,,
-Asiatic Arborvitae,Tuya Asiática,Platycladus orientalis,,Yes,,,,,,,,,,,,,,,,,,,,
-Cottonwood,Chopo Americano ,Populus deltoides,,Yes,,,Yes,,,,,,,,,,,,,,Yes,,,
-Cherry Laurel,,Prunus caroliniana,,,Yes,,,,,,,,,,,,,,,,,,,
-Mexican Plum,Ciruelo Mexicano ,Prunus mexicana,,,,,,Yes,,,,,,,,Yes,,Yes,,Yes,,,Yes,
-Pomegranate,Granada,Punica granatum,,,,,,,,,,,,,,,,..,,,Yes,
-Bradford Pear,Peral de Flor,Pyrus calleryana,,,,,Yes,Yes,,,,,,,,,,,,,,,,
-Live Oak,Encino,Quercus fusiformis,,,,,,Yes,,,,Yes,Yes,,,Yes,,,,,,Yes,,
-Lacey Oak,Encino Azul,Quercus laceyi,,Yes,,,,,,,,..Yes,,,,,,,Yes,,,Yes
-Bur Oak,Roble Bur,Quercus macrocarpa,,Yes,,,Yes,,,,Yes,,,,,,Yes,Yes,Yes,Yes,,,Yes,
-Chinkapin Oak,Encino de Piedras,Quercus muhlenbergii,,Yes,Yes,,,Yes,,Yes,,,,,,,,Yes,Yes,,,,,
-Monterrey Oak,Encino Roble,Quercus polymorpha,,,Yes,,,Yes,,Yes,,,,Yes,,,,,Yes,Yes,Yes,,Yes,
-Shumard Oak,Encino de Shumard,Quercus shumardii,,Yes,Yes,,,,Yes,,,,,Yes,,,Yes,,Yes,,Yes,Yes,,
-Live Oak,Encino,Quercus virginiana,,Yes,,Yes,,,Yes,,Yes,,,Yes,,Yes,Yes,Yes,Yes,Yes,Yes
-Black Willow,Sauce Negro,Salix nigra,,Yes,,,,,,,,,,,,,,,,,,,,
-Soapberry,Jaboncillo,Sapindus saponaria,,,,,,,,,,,,,,,,..,,,Yes,
-Gum Bumelia,Coma,Sideroxylon lanuginosum,,,,,,,,..Yes,,,,,Yes,,,,,,,
-Baldcypress,Ciprés de los Pantanos,Taxodium distichum,,Yes,,Yes,,,,,,,,Yes,,Yes,,,,Yes,,,,
-Chinese Tallow,Árbol de sebo,Triadica sebifera,,Yes,,,,,,,,,,,,,,,,,,,,Yes
-American Elm,Olmo americano,Ulmus americana,,Yes,,,Yes,,,,,,,,..,,,Yes,,,,
-Cedar Elm,Cedro Olmo,Ulmus crassifolia,,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,,Yes,Yes,Yes,Yes,,,Yes,Yes,Yes
-Lacebark Elm,Olmo Chino,Ulmus parvifolia,,,,,,,,Yes,,,,,,,,,,Yes,,,,Yes
-Mexican Buckeye,Monilla,Ungnadia speciosa,,,,..Yes,,Yes,,,,,,,,..Yes,,,Yes,
-Chaste Tree,Sauce Gatillo,Vitex agnus-castus,,,,,,,,,,,,,,,,Yes,,,,,,
-Prickly Ash,Árbol de Dolor de Dientes,Zanthoxylum hirsutum,,,,,,,,,,,Yes,,,,,,,,,,,`;
+        const speciesLibraryMappingCSV = `Common Name,Spanish Name,Latin Name,Butler Hike-and-Bike Trail,Butler Park,Carver Library,Central Library,Cepeda Library,Hampton Library,Howson Library,John Gillum Library,Little Walnut Creek Library,Menchaca Road Library,Milwood Library,Permitting & Development Center (PDC),Pease Park,Pleasant Hill Library,Ruiz Library,Southeast Library,Spicewood Springs Library,Terrazas Library,Twin Oaks Library,University Hills Library,Willie Mae Kirk Library,Windsor Park Library,Yarborough Library,
+Bigtooth Maple,Arce Palo de Azúcar,Acer grandidentatum,,X,,,,,,,,,,,,,,,,,,,,,,
+Boxelder,Arce Negundo,Acer negundo,,X,,,X,,,,,,,,,,,,,,,X,,,X,
+Anacaho Orchid Tree,Pata de Cabra Blanca,Bauhinia lunarioides,,X,,X,,,X,X,,,,,,,,X,,,,,,,,
+Pecan,Pecán,Carya illinoensis,,X,,,X,,X,X,,,,X,,X,,,X,X,,,X,,X,
+Sugar Hackberry,Palo Blanco,Celtis laevigata,,X,,,X,,,X,,X,X,,,X,,,X,,,,X,,X,
+Texas Redbud,Duraznillo,Cercis canadensis var. texensis,,X,X,,,,,,X,X,,X,,,X,X,X,,,X,,,,
+Desert Willow,Mimbre,Chilopsis linearis,,X,,X,,,,,,,,X,,,,,,X,,,,,X,
+Chitalpa,Chitalpa,Chitalpa tashkentensis ,,,,,,X,,,,,,,,,,,,,X,,,,,
+Leyland Cypress,Ciprés de Leyland,Cupressus × leylandii,,,,,,,,X,,,,,,,,,,,,,,,,
+Arizona Cypress,Cedro Blanco,Cupressus arizonica,,,,,,,,,,,,,,,,,,,X,,,,,
+Texas Mountian Laurel,Colorín,Dermatophyllum secundiflorum,,X,,X,X,X,X,,,,X,,,,,,X,,,X,,X,,
+Texas Persimmon,Chapote negro,Diospyros texana,,X,,,,X,,,X,,X,,,,,,,,X,,,,,
+Texas Ash,Fresno Blanco Americano,Fraxinus albicans,,,,X,,X,,,X,,X,,,,,,,,X,,,,,
+Arizona Ash,Fresno de Arizona,Fraxinus velutina,,,,,,,,X,,X,,X,,X,,,,,,,X,,,
+Possumhaw Holly,Acebo de Pantano,Ilex decidua,,X,,X,,,,,,,,,,,,X,,X,,,,,,
+Yaupon Holly,Acebo Yaupón,Ilex vomitoria,,X,X,,,,X,,,,,,,X,X,X,X,,,X,,,,
+Ashe Juniper,Enebro de Frutos Azules,Juniperus asheii,,,,,,,,,,,X,,,X,X,X,,,,,,,,
+Eastern Red Cedar,Enebro de Virginia,Juniperus virginiana,,,,,,,,,,,,,,,,,X,,,,,,,
+Crape Myrtle,Árbol de Júpiter,Lagerstroemia indica,,X,X,,,,X,,X,X,X,X,,X,,X,X,,,X,,,,
+Golden-Ball Leadtree,Árbol Peto,Leucaena retusa,,,,X,,,X,,,,,,,,,,,,,,,,,
+Privet,Ligustros,Ligustrum lucidum,,,,,,,,,,,,,,X,,,,,,,,,,
+Sweetgum,Liquidámbar,Liquidambar styraciflual,,,,,,,,,,,,,,,,,,,,,,,X,
+Osage Orange,Naranjo de Luisiana,Maclura pomifera,,,,,,,,,,,,,,,,,,,,,X,,,
+Chinaberry,Cinamomo,Melia azedarach,,X,,,X,,,,,,,X,,,,,,,,,,,X,
+Wax Myrtle,Árbol de la Cera,Morella cerifera,,,X,,,,,,,,,,,,,,,,,,,,,
+Mulberry,Morera,Morus sp.,,X,,,X,,,,,X,,,,,X,,,,,,,,,
+Honey Mesquite,Mezquite Dulce,Neltuma glandulosa,,,,X,,,,,,,,,,,X,X,,,,,,,,
+Palo Verde,Palo Verde,Parkinsonia aculeata,,,,,,,,,,,,,,,,,,,,,,,X,
+Chinese Pistache,Pistacho Chino ,Pistacia chinensis,,,,,X,X,,,,X,,,,,,,,,,,,,X,
+Mexican Sycamore,Álamo Blanco,Platanus mexicana,,,,X,,,,,,,,X,,,,,,,,,,,,
+American Sycamore,Álamo Americano,Platanus occidentalis,,,,,,,X,,,,,,,,X,,,,,,,,,
+Asiatic Arborvitae,Tuya Asiática,Platycladus orientalis,,X,,,,,,,,,,,,,,,,,,,,,,
+Cottonwood,Chopo Americano ,Populus deltoides,,X,,,X,,,,,,,,,,,,,,,X,,,,
+Cherry Laurel,,Prunus caroliniana,,,X,,,,,,,,,,,,,,,,,,,,,
+Mexican Plum,Ciruelo Mexicano ,Prunus mexicana,,,,,,X,,,,,,,,X,,X,X,,X,,,X,,
+Pomegranate,Granada Cordelina,Punica granatum,,,,,,,,,,,,,,,,,,,,,,X,,
+Bradford Pear,Peral de Flor,Pyrus calleryana,,,,,X,X,,,,,,,,,,,,,,,,,,
+Live Oak,Encino,Quercus fusiformis,,,,,,X,,,,X,X,,,X,,,X,,,,X,,,
+Lacey Oak,Encino Azul,Quercus laceyi,,X,,,,,,,,,,X,,,,,,,,X,,,X,
+Bur Oak,Roble Bur,Quercus macrocarpa,,X,,,X,,,,X,,,,,,X,X,,X,X,,,X,,
+Chinkapin Oak,Encino de Piedra,Quercus muhlenbergii,,X,X,,,X,,X,,,,,,,,X,,X,,,,,,
+Monterrey Oak,Encino Roble,Quercus polymorpha,,,X,,,X,,X,,,,X,,,,,X,X,X,X,,X,,
+Shumard Oak,Encino de Shumard,Quercus shumardii,,X,X,,,,X,,,,,X,,,X,,,X,,X,X,,,
+Live Oak,Encino,Quercus virginiana,,X,,X,,,X,,X,,,X,,,X,,,X,X,X,X,X,X,
+Black Willow,Sauce Negro,Salix nigra,,X,,,,,,,,,,,,,,,,,,,,,,
+Soapberry,Jaboncillo,Sapindus saponaria,,,,,,,,,,,,,,,,,,,,,,X,,
+Gum Bumelia,Coma,Sideroxylon lanuginosum,,,,,,,,,,X,,,,,X,,,,,,,,,
+Baldcypress,Ciprés de los Pantanos,Taxodium distichum,,X,,X,,,,,,,,X,,X,,,,,X,,,,,
+Chinese Tallow,Árbol de sebo,Triadica sebifera,,X,,,,,,,,,,,,,,,,,,,,,X,
+American Elm,Olmo americano,Ulmus americana,,X,,,X,,,,,,,,,,,,,,X,,,,,
+Cedar Elm,Cedro Olmo de Texas,Ulmus crassifolia,,X,X,X,X,X,X,X,X,X,X,X,,X,X,X,X,X,,,X,X,X,
+Lacebark Elm,Olmo Chino,Ulmus parvifolia,,,,,,,,X,,,,,,,,,,,X,,,,X,
+Mexican Buckeye,Monilla,Ungnadia speciosa,,,,,,X,,X,,,,,,,,,,,X,,,X,,
+Chaste Tree,Sauce Gatillo,Vitex agnus-castus,,,,,,,,,,,,,,,,X,,,,,,,,
+Prickly Ash,Árbol de Dolor de Muelas,Zanthoxylum hirsutum,,,,,,,,,,,X,,,,,,,,,,,,,`;
 
         // This is the new address data from the most recent CSV upload.
-        const addressCSV = `Location,Address
-Butler Hike-and-Bike Trail,100 Trail Ave
-Butler Park,2100 Barton Springs Rd
-Carver Library,1161 Angelina St
-Central Library,710 W Cesar Chavez St
-Cepeda Library,651 N Pleasant Valley Rd
-Hampton Library,5125 Convict Hill Rd
-Howson Library,2500 Exposition Blvd
-John Gillum Library,6700 Circle S Rd
-Little Walnut Creek Library,7200 Hart Ln
-Menchaca Library,5500 Menchaca Rd
-Milwood Library,12500 Amberglen Blvd
-PDC,5507 S IH 35 Frontage Rd
-Pease Park,1100 Kingsbury St
-Pleasant Hill Library,700 W William Cannon Dr
-Ruiz Library,1600 Grove Blvd
-Southeast Library,5803 Nuckols Crossing Rd
-Spicewood Springs,8637 Spicewood Springs Rd
-Terrazas Library,1105 E Cesar Chavez St
-Twin Oaks Library,1801 S 5th St
-University Hills Library,4721 Loyola Ln
-Willie Mae Kirk Library,3101 Oak Springs Dr
-Windsor Park Library,5833 Westminster Dr
-Yarborough Library,2200 Hancock Dr`;
+        const addressCSV = `Location,Address,StoryMap Link
+Butler Hike-and-Bike Trail,100 Trail Ave,https://storymaps.arcgis.com/stories/f32b5e0ea6d849839442ed226ebfe446
+Butler Park,2100 Barton Springs Rd,https://storymaps.arcgis.com/stories/01ece73574d843fca1eb0574242e0b16
+Carver Library,1161 Angelina St,https://storymaps.arcgis.com/stories/4984a07f067b47f0a7afe9f7bacdcd6d
+Central Library,710 W Cesar Chavez St,https://storymaps.arcgis.com/stories/d4bfc6656a3646be99445ed4e8cd2da5
+Cepeda Library,651 N Pleasant Valley Rd,https://storymaps.arcgis.com/stories/f3406fa11f7b41bc88350d8ad9f93627
+Hampton Library,5125 Convict Hill Rd,https://arcg.is/1CL4zP3
+Howson Library,2500 Exposition Blvd,https://storymaps.arcgis.com/stories/b31d8923a26240839c82a00e4a182df8
+John Gillum Library,6700 Circle S Rd,https://storymaps.arcgis.com/stories/7b650ac79884450daaaa5217e96860fc
+Little Walnut Creek Library,7200 Hart Ln,https://storymaps.arcgis.com/stories/c72d665a996744d5ad7dac63886ff0a1
+Menchaca Road Library,5500 Menchaca Rd,https://storymaps.arcgis.com/stories/d6c0ce0c4a0640af824a13125d5c5fff
+Milwood Library,12500 Amberglen Blvd,https://storymaps.arcgis.com/stories/2d1288df0aec427fa62ac448a11dd7ca
+Permitting & Development Center (PDC),5507 S IH 35 Frontage Rd,https://storymaps.arcgis.com/stories/e1514ec702a64745887990afda88e718
+Pease Park,1100 Kingsbury St,https://storymaps.arcgis.com/stories/1ca0b36c809a461486647758bd4d9be3
+Pleasant Hill Library,700 W William Cannon Dr,https://storymaps.arcgis.com/stories/95d22b2d1e06414d80be21460869cf8e
+Ruiz Library,1600 Grove Blvd,https://storymaps.arcgis.com/stories/08eb44dd77b44baa8e63d5b3fe594da0
+Southeast Library,5803 Nuckols Crossing Rd,https://storymaps.arcgis.com/stories/a9846f0fcb2a4a2192a0c639830e206e
+Spicewood Springs Library,8637 Spicewood Springs Rd,https://storymaps.arcgis.com/stories/36a669766ba74b52987b2eaa30bab931
+Terrazas Library,1105 E Cesar Chavez St,https://storymaps.arcgis.com/stories/a87a1fa4da9f459e9dad6a8377be9e5e
+Twin Oaks Library,1801 S 5th St,https://storymaps.arcgis.com/stories/9eaed14c5929492689c81cbe72740bca
+University Hills Library,4721 Loyola Ln,https://storymaps.arcgis.com/stories/2607015a9c304d6c8985872633cebe56
+Willie Mae Kirk Library,3101 Oak Springs Dr,https://storymaps.arcgis.com/stories/805ba6c283c24557a1f192d91802d3cf
+Windsor Park Library,5833 Westminster Dr,https://storymaps.arcgis.com/stories/95e6308ba0924ca988c09be9710f74ac
+Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536116447ad8af36568b87f9ca2`;
 
         // Function to parse the address CSV into a mapping object
         function parseAddressCSV(csv) {
@@ -168,10 +163,11 @@ Yarborough Library,2200 Hancock Dr`;
             // Start from the second line to skip headers
             for (let i = 1; i < lines.length; i++) {
                 const parts = lines[i].split(',');
-                if (parts.length >= 2) {
+                if (parts.length >= 3) { // Expecting at least Location, Address, StoryMap Link
                     const location = parts[0].trim();
-                    const address = parts.slice(1).join(',').trim(); // Join parts in case address contains commas
-                    addressMap[location] = address;
+                    const address = parts[1].trim();
+                    const storyMapLink = parts[2].trim();
+                    addressMap[location] = { address: address, storyMapLink: storyMapLink };
                 }
             }
             return addressMap;
@@ -186,41 +182,32 @@ Yarborough Library,2200 Hancock Dr`;
             const headers = lines[0].split(','); // Split by comma for headers
 
             // Library names start from the 4th column (index 3)
-            const libraryNames = headers.slice(3);
+            const libraryNames = headers.slice(3).map(name => name.trim()); // Trim names
+
             const parsedData = [];
 
             for (let i = 1; i < lines.length; i++) {
-                // Skip empty lines or lines with insufficient data that might result from trailing newlines or malformed rows in the CSV
-                if (lines[i].trim() === '') {
-                    continue;
-                }
                 const parts = lines[i].split(',');
-
-                // Ensure that the row has at least the common, spanish, and latin name columns (3 columns)
-                // Plus the number of library columns defined in headers.
-                if (parts.length < 3 + libraryNames.length) {
-                    console.warn(`Skipping malformed row in species CSV: "${lines[i]}" - Not enough expected columns.`);
-                    continue;
-                }
-
                 // Extract Common Name, Spanish Name, and Latin Name
-                const commonName = parts[0] ? parts[0].trim() : '';
-                const spanishName = parts[1] ? parts[1].trim() : '';
-                const latinName = parts[2] ? parts[2].trim() : '';
+                const commonName = parts[0].trim();
+                const spanishName = parts[1].trim();
+                const latinName = parts[2].trim();
 
                 for (let j = 0; j < libraryNames.length; j++) {
-                    // Ensure the part for the specific library exists before trimming
                     const cellValue = parts[j + 3] ? parts[j + 3].trim() : ''; // +3 to account for Common, Spanish, Latin Name
-                    const libraryName = libraryNames[j].trim();
+                    const libraryName = libraryNames[j];
                     if (cellValue === 'Yes' || cellValue === 'X') {
-                        parsedData.push({
-                            commonName: commonName,
-                            spanishName: spanishName,
-                            latinName: latinName,
-                            library: libraryName,
-                            // Lookup the address from the libraryAddresses object
-                            address: libraryAddresses[libraryName] || "Address Not Available"
-                        });
+                        const locationInfo = libraryAddresses[libraryName];
+                        if (locationInfo) {
+                            parsedData.push({
+                                commonName: commonName,
+                                spanishName: spanishName,
+                                latinName: latinName,
+                                library: libraryName,
+                                address: locationInfo.address,
+                                storyMapLink: locationInfo.storyMapLink
+                            });
+                        }
                     }
                 }
             }
@@ -232,7 +219,7 @@ Yarborough Library,2200 Hancock Dr`;
 
         // Get DOM elements
         const speciesSelectDropdown = document.getElementById('species-select');
-        const locationSelectDropdown = document.getElementById('location-select'); // New dropdown for locations
+        const locationSelectDropdown = document.getElementById('location-select'); // New location dropdown
         const resultsDiv = document.getElementById('results');
         const refreshButton = document.getElementById('refresh-button');
 
@@ -259,26 +246,36 @@ Yarborough Library,2200 Hancock Dr`;
             uniqueSpeciesInfo.forEach(species => {
                 const option = document.createElement('option');
                 option.value = species.common;
-                option.innerHTML = `<span class="font-bold">${species.common}</span> / <span class="text-sm">${species.spanish}</span> / <span class="text-sm italic">${species.latin}</span>`;
+                option.innerHTML = `${species.common} / <span class="text-sm">${species.spanish}</span> / <span class="text-sm italic">${species.latin}</span>`;
                 speciesSelectDropdown.appendChild(option);
             });
         }
 
-        // Function to populate the location dropdown with unique library/park names and addresses
+        // Function to populate the location dropdown
         function populateLocationDropdown() {
-            const uniqueLocations = new Map(); // Using a Map to maintain order and unique keys
-            for (const loc in libraryAddresses) {
-                uniqueLocations.set(loc, libraryAddresses[loc]);
-            }
+            const uniqueLocations = [];
+            const seenLocations = new Set();
 
-            // Convert to array and sort alphabetically by location name
-            const sortedLocations = Array.from(uniqueLocations.entries()).sort(([nameA,], [nameB,]) => nameA.localeCompare(nameB));
+            // Extract unique locations from treeData, which already has address and storyMapLink
+            treeData.forEach(item => {
+                const locationKey = `${item.library}|${item.address}`;
+                if (!seenLocations.has(locationKey)) {
+                    uniqueLocations.push({
+                        name: item.library,
+                        address: item.address,
+                        storyMapLink: item.storyMapLink
+                    });
+                    seenLocations.add(locationKey);
+                }
+            });
+
+            uniqueLocations.sort((a, b) => a.name.localeCompare(b.name));
 
             locationSelectDropdown.innerHTML = '<option value="">-- select here / seleccione aquí --</option>';
-            sortedLocations.forEach(([locationName, address]) => {
+            uniqueLocations.forEach(location => {
                 const option = document.createElement('option');
-                option.value = locationName; // The value is the location name for lookup
-                option.innerHTML = `<span class="font-bold">${locationName}</span> - ${address}`;
+                option.value = location.name; // Use library name as value for lookup
+                option.textContent = `${location.name} - ${location.address}`;
                 locationSelectDropdown.appendChild(option);
             });
         }
@@ -288,7 +285,7 @@ Yarborough Library,2200 Hancock Dr`;
             const lowerCaseSelectedSpecies = selectedSpecies.toLowerCase().trim();
 
             if (!lowerCaseSelectedSpecies) {
-                resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>';
+                resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here.</p>';
                 return;
             }
 
@@ -297,15 +294,16 @@ Yarborough Library,2200 Hancock Dr`;
             );
 
             if (matchedEntries.length === 0) {
-                resultsDiv.innerHTML = `<p class="text-red-600 text-center">No results found for "${selectedSpecies}".</p>`;
+                resultsDiv.innerHTML = `<p class="text-red-600 text-center">No results found for "${selectedSpecies}".</p`;
                 return;
             }
 
-            const uniqueLibraries = new Map(); // Map<libraryName, address>
+            const uniqueLibraries = new Map(); // Map<libraryName, {address, storyMapLink}>
             let displayCommonName = selectedSpecies;
             let displaySpanishName = "";
             let displayLatinName = "";
 
+            // Get the full details for the selected species (assuming consistent naming across locations)
             const firstMatchedEntry = matchedEntries[0];
             if (firstMatchedEntry) {
                 displayCommonName = firstMatchedEntry.commonName;
@@ -314,24 +312,23 @@ Yarborough Library,2200 Hancock Dr`;
             }
 
             matchedEntries.forEach(entry => {
-                uniqueLibraries.set(entry.library, entry.address);
+                uniqueLibraries.set(entry.library, {address: entry.address, storyMapLink: entry.storyMapLink});
             });
 
             let resultsHtml = `<h2 class="text-xl font-semibold mb-3 text-gray-700">Found "${displayCommonName} / ${displaySpanishName} / <i>${displayLatinName}</i>" at:</h2>`;
             resultsHtml += '<ul class="list-disc pl-5 space-y-2">';
             if (uniqueLibraries.size === 0) {
-                resultsHtml += `<p class="text-red-600 text-center">No specific library locations found for "${selectedSpecies}".</p>`;
+                resultsHtml += `<p class="text-red-600 text-center">No specific location information found for "${selectedSpecies}".</p>`;
             } else {
-                const sortedLibraries = Array.from(uniqueLibraries.entries()).sort(([nameA,], [nameB,]) => nameA.localeCompare(nameB));
-
-                sortedLibraries.forEach(([libraryName, address]) => {
-                    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address + ", Austin, TX")}`;
+                uniqueLibraries.forEach((locationInfo, libraryName) => {
+                    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationInfo.address + ", Austin, TX")}`;
                     resultsHtml += `
                         <li class="text-gray-800">
                             <strong>${libraryName}</strong><br>
-                            <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="address-link text-gray-600 text-sm">
-                                ${address}
+                            <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="address-link">
+                                ${locationInfo.address}
                             </a>
+                            <p class="mt-1"><a href="${locationInfo.storyMapLink}" target="_blank" rel="noopener noreferrer" class="address-link text-xl text-green-700">Take the Tour!</a></p>
                         </li>
                     `;
                 });
@@ -341,106 +338,85 @@ Yarborough Library,2200 Hancock Dr`;
             resultsDiv.innerHTML = resultsHtml;
         }
 
-        // Function to display species found at a specific location
-        function displayLocationSpeciesResults(selectedLocation) {
-            const lowerCaseSelectedLocation = selectedLocation.toLowerCase().trim();
-
-            if (!lowerCaseSelectedLocation) {
-                resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>';
+        // Function to display all tree species at a selected location
+        function displayTreeSpeciesByLocation(selectedLocationName) {
+            if (!selectedLocationName) {
+                resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here.</p>';
                 return;
             }
 
-            const locationAddress = libraryAddresses[selectedLocation];
-            const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationAddress + ", Austin, TX")}`;
-
-            const speciesAtLocation = treeData.filter(item =>
-                item.library.toLowerCase() === lowerCaseSelectedLocation
+            const matchedEntries = treeData.filter(item =>
+                item.library === selectedLocationName
             );
 
-            if (speciesAtLocation.length === 0) {
-                resultsDiv.innerHTML = `
-                    <h2 class="text-xl font-semibold mb-3 text-gray-700">${selectedLocation}</h2>
-                    <p class="text-gray-800 mb-4">
-                        <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="address-link text-lg">
-                            ${locationAddress}
-                        </a>
-                    </p>
-                    <p class="text-red-600 text-center">No tree species listed for "${selectedLocation}".</p>
-                `;
+            if (matchedEntries.length === 0) {
+                resultsDiv.innerHTML = `<p class="text-red-600 text-center">No tree species found at "${selectedLocationName}".</p>`;
                 return;
             }
 
-            const uniqueSpeciesInfo = [];
-            const seenCombinations = new Set();
-            speciesAtLocation.forEach(item => {
-                const combinationKey = `${item.commonName}|${item.spanishName}|${item.latinName}`;
-                if (!seenCombinations.has(combinationKey)) {
-                    uniqueSpeciesInfo.push({
-                        common: item.commonName,
+            // Get unique species names for the selected location
+            const uniqueSpeciesAtLocation = new Map(); // Map<commonName, {spanish, latin}>
+            matchedEntries.forEach(item => {
+                if (!uniqueSpeciesAtLocation.has(item.commonName)) {
+                    uniqueSpeciesAtLocation.set(item.commonName, {
                         spanish: item.spanishName,
                         latin: item.latinName
                     });
-                    seenCombinations.add(combinationKey);
                 }
             });
 
-            uniqueSpeciesInfo.sort((a, b) => a.common.localeCompare(b.common));
+            // Get location info for the header
+            const locationInfoForHeader = libraryAddresses[selectedLocationName];
+            const googleMapsUrlForHeader = locationInfoForHeader ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationInfoForHeader.address + ", Austin, TX")}` : '#';
+            const storyMapLinkForHeader = locationInfoForHeader ? locationInfoForHeader.storyMapLink : '#';
 
             let resultsHtml = `
-                <h2 class="text-xl font-semibold mb-3 text-gray-700">${selectedLocation}</h2>
-                <p class="text-gray-800 mb-4">
-                    <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="address-link text-lg">
-                        ${locationAddress}
-                    </a>
+                <h2 class="text-xl font-semibold mb-3 text-gray-700">Tree Species at ${selectedLocationName}:</h2>
+                <p class="text-gray-600 text-sm mb-3">
+                    <a href="${googleMapsUrlForHeader}" target="_blank" rel="noopener noreferrer" class="address-link">${locationInfoForHeader.address}</a>
                 </p>
-                <h3 class="text-lg font-medium mb-2 text-gray-700">Species found here:</h3>
+                <p class="mt-1 mb-3"><a href="${storyMapLinkForHeader}" target="_blank" rel="noopener noreferrer" class="address-link text-xl text-green-700">Take the Tour!</a></p>
                 <ul class="list-disc pl-5 space-y-2">
             `;
 
-            uniqueSpeciesInfo.forEach(species => {
-                resultsHtml += `
-                    <li class="text-gray-800 species-result-item">
-                        <strong>${species.common}</strong> / <span class="text-sm">${species.spanish}</span> / <span class="text-sm italic">${species.latin}</span>
-                    </li>
-                `;
-            });
-
+            if (uniqueSpeciesAtLocation.size === 0) {
+                resultsHtml += `<p class="text-red-600 text-center">No tree species listed for this location.</p>`;
+            } else {
+                uniqueSpeciesAtLocation.forEach((speciesInfo, commonName) => {
+                    resultsHtml += `
+                        <li class="text-gray-800">
+                            <strong>${commonName}</strong> / ${speciesInfo.spanish} / <i>${speciesInfo.latin}</i>
+                        </li>
+                    `;
+                });
+            }
             resultsHtml += '</ul>';
             resultsDiv.innerHTML = resultsHtml;
         }
 
-
         // Event listener for species select dropdown
         speciesSelectDropdown.addEventListener('change', (event) => {
             const selectedSpecies = event.target.value;
-            if (selectedSpecies) {
-                locationSelectDropdown.value = ''; // Clear location selection if species is selected
-                displayTreeSpeciesResults(selectedSpecies);
-            } else {
-                resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>';
-            }
+            locationSelectDropdown.value = ''; // Clear location selection
+            displayTreeSpeciesResults(selectedSpecies);
         });
 
         // Event listener for location select dropdown
         locationSelectDropdown.addEventListener('change', (event) => {
             const selectedLocation = event.target.value;
-            if (selectedLocation) {
-                speciesSelectDropdown.value = ''; // Clear species selection if location is selected
-                displayLocationSpeciesResults(selectedLocation);
-            } else {
-                resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>';
-            }
+            speciesSelectDropdown.value = ''; // Clear species selection
+            displayTreeSpeciesByLocation(selectedLocation);
         });
 
         // Event listener for the refresh button
         refreshButton.addEventListener('click', () => {
-            speciesSelectDropdown.value = ''; // Clear the dropdown selection
+            speciesSelectDropdown.value = ''; // Clear the species dropdown selection
             locationSelectDropdown.value = ''; // Clear the location dropdown selection
-            resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here / Los resultados aquí</p>';
-            speciesSelectDropdown.focus(); // Set focus back to the species dropdown
+            resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here.</p>';
+            speciesSelectDropdown.focus(); // Set focus back to the first dropdown
         });
 
-        // Initialize both dropdowns on page load
+        // Initialize the dropdowns on page load
         document.addEventListener('DOMContentLoaded', () => {
             populateSpeciesDropdown();
             populateLocationDropdown();

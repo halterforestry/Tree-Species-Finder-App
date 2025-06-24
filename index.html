@@ -36,6 +36,24 @@
             color: #14436B;
           }
         }
+
+        /* Keyframes for the bounce animation */
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+          }
+          40% {
+            transform: translateY(-10px);
+          }
+          60% {
+            transform: translateY(-5px);
+          }
+        }
+
+        /* Apply the bounce animation to the arrow */
+        .bouncing-arrow {
+          animation: bounce 2s infinite;
+        }
     </style>
 </head>
 <!-- The main container now has a fixed width of 400px and a fixed height of 400px. -->
@@ -74,8 +92,12 @@
             </select>
         </div>
 
-        <div class="mt-8 flex justify-end">
-            <!-- Reverted button color to Tailwind's default blue-600/700 -->
+        <!-- Increased space-x further from space-x-8 to space-x-16 to move the arrow further left -->
+        <div class="mt-8 flex justify-end items-center space-x-16">
+            <!-- SVG for the bouncing down arrow -->
+            <svg id="results-arrow" class="h-6 w-6 text-gray-500 bouncing-arrow hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
             <button
                 id="refresh-button"
                 class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
@@ -130,7 +152,7 @@ Mexican Plum,Ciruelo Mexicano ,Prunus mexicana,,,,,,X,,,,,,,,X,,X,X,,X,,,X,,
 Pomegranate,Granada Cordelina,Punica granatum,,,,,,,,,,,,,,,,,,,,,,X,,
 Bradford Pear,Peral de Flor,Pyrus calleryana,,,,,X,X,,,,,,,,,,,,,,,,,,
 Live Oak,Encino,Quercus fusiformis,,,,,,X,,,,X,X,,,X,,,X,,,,X,,,
-Lacey Oak,Encino Azul,Quercus laceyi,,X,,,,,,,,,,X,,,,,,,,X,,,X,
+Lacey Oak,Encino Azul,Quercus laceyi,,X,,,,,,,,!!X,,,,,,,,X,,,X,
 Bur Oak,Roble Bur,Quercus macrocarpa,,X,,,X,,,,X,,,,,,X,X,,X,X,,,X,,
 Chinkapin Oak,Encino de Piedra,Quercus muhlenbergii,,X,X,,,X,,X,,,,,,,,X,,X,,,,,,
 Monterrey Oak,Encino Roble,Quercus polymorpha,,,X,,,X,,X,,,,X,,,,,X,X,X,X,,X,,
@@ -240,6 +262,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
         const locationSelectDropdown = document.getElementById('location-select'); // New location dropdown
         const resultsDiv = document.getElementById('results');
         const refreshButton = document.getElementById('refresh-button');
+        const resultsArrow = document.getElementById('results-arrow'); // Get the arrow SVG
 
         // Function to populate the species dropdown with unique species
         function populateSpeciesDropdown() {
@@ -304,6 +327,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
 
             if (!lowerCaseSelectedSpecies) {
                 resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here.</p>';
+                resultsArrow.classList.add('hidden'); // Hide arrow if no selection
                 return;
             }
 
@@ -313,6 +337,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
 
             if (matchedEntries.length === 0) {
                 resultsDiv.innerHTML = `<p class="text-red-600 text-center">No results found for "${selectedSpecies}".</p`;
+                resultsArrow.classList.add('hidden'); // Hide arrow if no results
                 return;
             }
 
@@ -337,6 +362,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
             resultsHtml += '<ul class="list-disc pl-5 space-y-2">';
             if (uniqueLibraries.size === 0) {
                 resultsHtml += `<p class="text-red-600 text-center">No specific location information found for "${selectedSpecies}".</p>`;
+                resultsArrow.classList.add('hidden'); // Hide arrow if no specific location info
             } else {
                 uniqueLibraries.forEach((locationInfo, libraryName) => {
                     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationInfo.address + ", Austin, TX")}`;
@@ -350,6 +376,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
                         </li>
                     `;
                 });
+                resultsArrow.classList.remove('hidden'); // Show arrow if results are displayed
             }
             resultsHtml += '</ul>';
 
@@ -360,6 +387,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
         function displayTreeSpeciesByLocation(selectedLocationName) {
             if (!selectedLocationName) {
                 resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here.</p>';
+                resultsArrow.classList.add('hidden'); // Hide arrow if no selection
                 return;
             }
 
@@ -369,6 +397,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
 
             if (matchedEntries.length === 0) {
                 resultsDiv.innerHTML = `<p class="text-red-600 text-center">No tree species found at "${selectedLocationName}".</p>`;
+                resultsArrow.classList.add('hidden'); // Hide arrow if no results
                 return;
             }
 
@@ -399,6 +428,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
 
             if (uniqueSpeciesAtLocation.size === 0) {
                 resultsHtml += `<p class="text-red-600 text-center">No tree species listed for this location.</p>`;
+                resultsArrow.classList.add('hidden'); // Hide arrow if no specific location info
             } else {
                 uniqueSpeciesAtLocation.forEach((speciesInfo, commonName) => {
                     resultsHtml += `
@@ -407,6 +437,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
                         </li>
                     `;
                 });
+                resultsArrow.classList.remove('hidden'); // Show arrow if results are displayed
             }
             resultsHtml += '</ul>';
             resultsDiv.innerHTML = resultsHtml;
@@ -431,6 +462,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
             speciesSelectDropdown.value = ''; // Clear the species dropdown selection
             locationSelectDropdown.value = ''; // Clear the location dropdown selection
             resultsDiv.innerHTML = '<p class="text-gray-600 text-center">Results will appear here.</p>';
+            resultsArrow.classList.add('hidden'); // Hide arrow on reset
             speciesSelectDropdown.focus(); // Set focus back to the first dropdown
         });
 
@@ -438,6 +470,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
         document.addEventListener('DOMContentLoaded', () => {
             populateSpeciesDropdown();
             populateLocationDropdown();
+            resultsArrow.classList.add('hidden'); // Initially hide the arrow on load
         });
     </script>
 </body>

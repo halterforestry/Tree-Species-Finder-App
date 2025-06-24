@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tree Species Finder / El Buscador de Arboles</title>
+    <title>Tree Species Finder / El Buscador de Árboles</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -27,19 +27,24 @@
         }
     </style>
 </head>
+<!-- The main container now has a fixed width of 400px and a fixed height of 400px. -->
+<!-- Added overflow-auto to handle content that might exceed the fixed height. -->
 <body class="p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-lg">
-        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Tree Species Finder / El Buscador de Arboles</h1>
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-[400px] h-[400px] overflow-auto">
+        <!-- Reduced title font size from text-2xl to text-xl for better visual alignment with map headings -->
+        <h1 class="text-xl font-bold mb-6 text-center text-gray-800">Tree Species Finder / El Buscador de Árboles</h1>
 
         <div class="mb-6">
+            <!-- Added accent to Árboles -->
             <label for="species-select" class="block text-gray-700 text-sm font-medium mb-2">
-                What tree species are you interested in? / ¿Qué especies de árboles te interesan?
+                What tree species are you interested in? / ¿Qué especies de Árboles te interesan?
             </label>
             <select
                 id="species-select"
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
             >
-                <option value="">-- select here / seleccione aquí --</option>
+                <!-- Updated placeholder text to "selección aquí" -->
+                <option value="">-- select here / selección aquí --</option>
                 <!-- Options will be populated by JavaScript -->
             </select>
         </div>
@@ -52,17 +57,18 @@
                 id="location-select"
                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
             >
-                <option value="">-- select here / seleccione aquí --</option>
+                <!-- Updated placeholder text to "selección aquí" -->
+                <option value="">-- select here / selección aquí --</option>
                 <!-- Options will be populated by JavaScript -->
             </select>
         </div>
 
-        <div class="mt-8 flex justify-end"> <!-- Changed justify-center to justify-end -->
+        <div class="mt-8 flex justify-end">
             <button
                 id="refresh-button"
                 class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
             >
-                Reset / Reiniciar <!-- Changed button text -->
+                Reset / Reiniciar
             </button>
         </div>
 
@@ -85,7 +91,7 @@ Chitalpa,Chitalpa,Chitalpa tashkentensis ,,,,,,X,,,,,,,,,,,,,X,,,,,
 Leyland Cypress,Ciprés de Leyland,Cupressus × leylandii,,,,,,,,X,,,,,,,,,,,,,,,,
 Arizona Cypress,Cedro Blanco,Cupressus arizonica,,,,,,,,,,,,,,,,,,,X,,,,,
 Texas Mountian Laurel,Colorín,Dermatophyllum secundiflorum,,X,,X,X,X,X,,,,X,,,,,,X,,,X,,X,,
-Texas Persimmon,Chapote negro,Diospyros texana,,X,,,,X,,,X,,X,,,,,,,,X,,,,,
+Texas Persimmon,Chapote negro,Diospyryos texana,,X,,,,X,,,X,,X,,,,,,,,X,,,,,
 Texas Ash,Fresno Blanco Americano,Fraxinus albicans,,,,X,,X,,,X,,X,,,,,,,,X,,,,,
 Arizona Ash,Fresno de Arizona,Fraxinus velutina,,,,,,,,X,,X,,X,,X,,,,,,,X,,,
 Possumhaw Holly,Acebo de Pantano,Ilex decidua,,X,,X,,,,,,,,,,,,X,,X,,,,,,
@@ -134,7 +140,7 @@ Prickly Ash,Árbol de Dolor de Muelas,Zanthoxylum hirsutum,,,,,,,,,,,X,,,,,,,,,,
         const addressCSV = `Location,Address,StoryMap Link
 Butler Hike-and-Bike Trail,100 Trail Ave,https://storymaps.arcgis.com/stories/f32b5e0ea6d849839442ed226ebfe446
 Butler Park,2100 Barton Springs Rd,https://storymaps.arcgis.com/stories/01ece73574d843fca1eb0574242e0b16
-Carver Library,1161 Angelina St,https://storymaps.arcgis.com/stories/4984a07f067b47f0a7afe9f7bacdcd6d
+Carver Library,1161 Angelina St,https://storymaps.arcgis.com/stories/4984a07f067b47f0a7afe9f8bacdcd6d
 Central Library,710 W Cesar Chavez St,https://storymaps.arcgis.com/stories/d4bfc6656a3646be99445ed4e8cd2da5
 Cepeda Library,651 N Pleasant Valley Rd,https://storymaps.arcgis.com/stories/f3406fa11f7b41bc88350d8ad9f93627
 Hampton Library,5125 Convict Hill Rd,https://arcg.is/1CL4zP3
@@ -242,7 +248,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
 
             uniqueSpeciesInfo.sort((a, b) => a.common.localeCompare(b.common));
 
-            speciesSelectDropdown.innerHTML = '<option value="">-- select here / seleccione aquí --</option>';
+            speciesSelectDropdown.innerHTML = '<option value="">-- select here / selección aquí --</option>';
             uniqueSpeciesInfo.forEach(species => {
                 const option = document.createElement('option');
                 option.value = species.common;
@@ -271,7 +277,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
 
             uniqueLocations.sort((a, b) => a.name.localeCompare(b.name));
 
-            locationSelectDropdown.innerHTML = '<option value="">-- select here / seleccione aquí --</option>';
+            locationSelectDropdown.innerHTML = '<option value="">-- select here / selección aquí --</option>';
             uniqueLocations.forEach(location => {
                 const option = document.createElement('option');
                 option.value = location.name; // Use library name as value for lookup

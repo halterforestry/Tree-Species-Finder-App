@@ -10,58 +10,43 @@
         /* Custom font */
         body {
             font-family: "Inter", sans-serif;
-            background-color: #f0f4f8; /* Light blue-grey background */
+            /* Changed background-color from light blue-grey to a more neutral light grey */
+            background-color: #f8f8f8;
         }
-        /* Style for the address link */
-        .address-link {
-            color: #2563eb; /* Blue color for links */
-            text-decoration: underline;
-            cursor: pointer;
-        }
-        .address-link:hover {
-            color: #1d4ed8; /* Darker blue on hover */
-        }
+        /* Removed custom .address-link styles as Tailwind classes will be used directly on the links */
+
         /* Style for dropdown options to allow specific sizing */
         .species-option .latin {
             font-style: italic;
         }
 
-        /* Custom Tailwind Color Configuration (only for text-customBlue) */
-        @tailwind base;
-        @tailwind components;
-        @tailwind utilities;
-
-        @layer utilities {
-          .text-customBlue {
-            color: #14436B;
-          }
-        }
+        /* Removed custom Tailwind Color Configuration for text-customBlue */
 
         /* Keyframes for the bounce animation */
         @keyframes bounce {
-          0%, 20%, 50%, 80%, 100% {
-            transform: translateY(0);
-          }
-          40% {
-            transform: translateY(-10px);
-          }
-          60% {
-            transform: translateY(-5px);
-          }
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
         }
 
         /* Apply the bounce animation to the arrow */
         .bouncing-arrow {
-          animation: bounce 2s infinite;
+            animation: bounce 2s infinite;
         }
     </style>
 </head>
-<!-- The main container now has a fixed width of 400px and a fixed height of 400px. -->
+<!-- The main container now has a fixed width of 458px and a fixed height of 400px. -->
 <!-- Added overflow-auto to handle content that might exceed the fixed height. -->
 <body class="p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-[400px] h-[400px] overflow-auto">
-        <!-- Reduced title font size to text-lg and applied custom color #14436B -->
-        <h1 class="text-lg font-bold mb-6 text-center text-customBlue">Tree Species Finder / El Buscador de Árboles</h1>
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-[458px] h-[400px] overflow-auto">
+        <!-- Reduced title font size to text-lg and changed text color from customBlue to gray-900 (blackish) -->
+        <h1 class="text-lg font-bold mb-6 text-center text-gray-900">Tree Species Finder / El Buscador de Árboles</h1>
 
         <div class="mb-6">
             <!-- Added accent to Árboles -->
@@ -70,7 +55,7 @@
             </label>
             <select
                 id="species-select"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
             >
                 <!-- Updated placeholder text to "selección aquí" -->
                 <option value="">-- select here / selección aquí --</option>
@@ -84,7 +69,7 @@
             </label>
             <select
                 id="location-select"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent bg-white text-gray-800 transition duration-200"
             >
                 <!-- Updated placeholder text to "selección aquí" -->
                 <option value="">-- select here / selección aquí --</option>
@@ -106,7 +91,8 @@
             </button>
         </div>
 
-        <div id="results" class="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200 shadow-inner">
+        <!-- Changed background and border colors for the results div to neutral gray tones -->
+        <div id="results" class="mt-8 p-4 bg-gray-100 rounded-lg border border-gray-300 shadow-inner">
             <p class="text-gray-600 text-center">Results will appear here.</p>
         </div>
     </div>
@@ -175,7 +161,7 @@ Prickly Ash,Árbol de Dolor de Muelas,Zanthoxylum hirsutum,,,,,,,,,,,X,,,,,,,,,,
 Butler Hike-and-Bike Trail,100 Trail Ave,https://storymaps.arcgis.com/stories/f32b5e0ea6d849839442ed226ebfe446
 Butler Park,2100 Barton Springs Rd,https://storymaps.arcgis.com/stories/01ece73574d843fca1eb0574242e0b16
 Carver Library,1161 Angelina St,https://storymaps.arcgis.com/stories/4984a07f067b47f0a7afe9f8bacdcd6d
-Central Library,710 W Cesar Chavez St,https://storymaps.arcgis.com/stories/d4bfc6656a3646be99445ed4e8cd2da5
+Central Library,710 W Cesar Chavez St,https://storymaps.arcgis.com/stories/d4bfc6656a3646be99442ed4e8cd2da5
 Cepeda Library,651 N Pleasant Valley Rd,https://storymaps.arcgis.com/stories/f3406fa11f7b41bc88350d8ad9f93627
 Hampton Library,5125 Convict Hill Rd,https://arcg.is/1CL4zP3
 Howson Library,2500 Exposition Blvd,https://storymaps.arcgis.com/stories/b31d8923a26240839c82a00e4a182df8
@@ -369,10 +355,11 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
                     resultsHtml += `
                         <li class="text-gray-800">
                             <strong>${libraryName}</strong><br>
-                            <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="address-link">
+                            <!-- Changed address link color to text-gray-800 and hover to text-gray-600 -->
+                            <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="text-gray-800 hover:text-gray-600 underline cursor-pointer">
                                 ${locationInfo.address}
                             </a>
-                            <p class="mt-1"><a href="${locationInfo.storyMapLink}" target="_blank" rel="noopener noreferrer" class="address-link text-xl text-green-700">Take the Tour!</a></p>
+                            <p class="mt-1"><a href="${locationInfo.storyMapLink}" target="_blank" rel="noopener noreferrer" class="text-xl text-green-700 underline cursor-pointer">Take the Tour!</a></p>
                         </li>
                     `;
                 });
@@ -420,9 +407,10 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
             let resultsHtml = `
                 <h2 class="text-xl font-semibold mb-3 text-gray-700">Tree Species at ${selectedLocationName}:</h2>
                 <p class="text-gray-600 text-sm mb-3">
-                    <a href="${googleMapsUrlForHeader}" target="_blank" rel="noopener noreferrer" class="address-link">${locationInfoForHeader.address}</a>
+                    <!-- Changed address link color to text-gray-800 and hover to text-gray-600 -->
+                    <a href="${googleMapsUrlForHeader}" target="_blank" rel="noopener noreferrer" class="text-gray-800 hover:text-gray-600 underline cursor-pointer">${locationInfoForHeader.address}</a>
                 </p>
-                <p class="mt-1 mb-3"><a href="${storyMapLinkForHeader}" target="_blank" rel="noopener noreferrer" class="address-link text-xl text-green-700">Take the Tour!</a></p>
+                <p class="mt-1 mb-3"><a href="${storyMapLinkForHeader}" target="_blank" rel="noopener noreferrer" class="text-xl text-green-700 underline cursor-pointer">Take the Tour!</a></p>
                 <ul class="list-disc pl-5 space-y-2">
             `;
 

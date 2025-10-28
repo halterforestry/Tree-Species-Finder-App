@@ -41,10 +41,10 @@
         }
     </style>
 </head>
-<!-- The main container now has a fixed width of 458px and a fixed height of 400px. -->
+<!-- The main container now has a fixed width of 458px and a fixed height of 600px. -->
 <!-- Added overflow-auto to handle content that might exceed the fixed height. -->
 <body class="p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-[458px] h-[400px] overflow-auto">
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-[458px] h-[600px] overflow-auto">
         <!-- Reduced title font size to text-lg and changed text color from customBlue to gray-900 (blackish) -->
         <h1 class="text-lg font-bold mb-6 text-center text-gray-900">Tree Species Finder / El Buscador de Árboles</h1>
 
@@ -83,12 +83,12 @@
             <svg id="results-arrow" class="h-6 w-6 text-gray-500 bouncing-arrow hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
-            <button
-                id="refresh-button"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
-            >
-                Reset / Reiniciar
-            </button>
+           <button
+    id="refresh-button"
+    class="bg-[#44499C] hover:bg-[#373a7c] text-white font-bold py-2 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-[#5c62b3] focus:ring-opacity-75"
+>
+    Reset / Reiniciar
+</button>
         </div>
 
         <!-- Changed background and border colors for the results div to neutral gray tones -->
@@ -360,7 +360,7 @@ Yarborough Library,2200 Hancock Dr,https://storymaps.arcgis.com/stories/ea9d4536
                             <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="text-gray-800 hover:text-gray-600 underline cursor-pointer">
                                 ${locationInfo.address}
                             </a>
-                            <p class="mt-1"><a href="${locationInfo.storyMapLink}" target="_blank" rel="noopener noreferrer" class="text-xl text-green-700 underline cursor-pointer">Take the Tour!</a></p>
+                            <p class="mt-1"><a href="${locationInfo.storyMapLink}" target="_blank" rel="noopener noreferrer" class="text-xl text-[#009F4D] underline cursor-pointer">Take the Tour!</a></p>
                         </li>
                     `;
                 });
